@@ -1,0 +1,46 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.edennoah.voicechanger'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.edennoah.voicechanger'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // Fixed key so new builds install over old ones without uninstalling
+    signingConfigs {
+        chaos {
+            storeFile file('chaosvoice.jks')
+            storePassword 'chaosvoice'
+            keyAlias 'chaosvoice'
+            keyPassword 'chaosvoice'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.chaos
+        }
+        debug {
+            signingConfig signingConfigs.chaos
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
